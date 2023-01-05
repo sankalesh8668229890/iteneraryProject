@@ -12,6 +12,7 @@ import Signup from './components/Signup';
 function App() {
   return (
     <>
+      <Navbar />
       <Route exact path="/">
         <Home />
       </Route>
