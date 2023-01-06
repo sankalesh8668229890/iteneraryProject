@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Form, Button, Checkbox, DatePicker, Input, Select } from "antd"
-import "../App.css"
+import { Form, Button, Checkbox, Input  } from "antd"
+// import "../App.css"
+import "./Temp.css"
 
 function Signup() {
     const [user, setUser] = useState({
@@ -43,9 +44,10 @@ function Signup() {
         }
     }
     return (
-        <div className="App">
-            <Form autoComplete="off" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }}>
-                <Form.Item name="fullName"
+        <div className="Temp">
+            <h1>Signup Page</h1>
+            <Form autoComplete="off" labelCol={{ span: 10 }} wrapperCol={{ span:25 }}>
+                <Form.Item className="Temp-name" name="fullName"
                     label="Full Name"
                     rules={[
                         {

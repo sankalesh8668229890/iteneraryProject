@@ -1,10 +1,48 @@
-import React from'react'
+import React, { useState } from'react'
 import { Form, Button, Input } from "antd"
 import "../App.css"
+import "./Login.css"
 
 const Login = () => {
+
+    const [user, setUser] = useState({
+        email: "",
+        password: ""
+    })
+
+    const handleInputs = (e) => {
+        setUser({
+            ...user,
+            [e.target.name]: e.target.value
+        })
+    };
+    console.log("user",user)
+
+    const postData = async(e)=>{
+        e.preventDefault()
+        const {email, password} = user
+
+        const res = await fetch("http://localhost:3000/login",{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email,
+                password
+            })
+        });
+        const data = await res.json();
+        if(data.status === 200){
+            alert("Login successful")
+        }
+        else{
+            alert(data.message)
+        }
+    }
     return (
-        <div className="App">
+        <div className="Login">
+            <h1>Login Page</h1>
             <Form autoComplete="off" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }}>
 
                 <Form.Item name="email" label="email"
@@ -19,7 +57,7 @@ const Login = () => {
                     }
                 ]}
                 hasFeedback>
-                    <Input placeholder='Please enter Email' />
+                    <Input placeholder='Please enter Email' name="email" onChange={handleInputs} />
                 </Form.Item>
                 <Form.Item name="password" label="password"
                     rules={[
@@ -33,10 +71,10 @@ const Login = () => {
                         },
                     ]}
                     hasFeedback>
-                        <Input.Password placeholder='Please Enter Password' />
+                        <Input.Password placeholder='Please Enter Password' name="password" onChange={handleInputs} />
                     </Form.Item>
                 <Form.Item wrapperCol={{ span: 24 }}>
-                    <Button type="primary" htmlType="submit">Login</Button>
+                    <Button type="primary" htmlType="submit" onClick={postData}>Login</Button>
                 </Form.Item>
             </Form>
         </div>

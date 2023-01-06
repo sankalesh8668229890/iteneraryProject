@@ -59,8 +59,14 @@ const login = async (req, res) => {
                 userId: user._id.toString(),
                 iat: Math.floor(Date.now() / 1000),
             },
-            process.env.SECRET_KEY,
-            { expiresIn: Math.floor(Date.now() / 1000) + 168 * 60 * 60 });
+            process.env.SECRET_KEY);
+            console.log(token);
+
+            res.cookie("itinerary", token,{
+                expiresIn: new Date(Date.now() + 2592000000),
+                httpOnly: true
+            });
+            // { expiresIn: Math.floor(Date.now() / 1000) + 2592000000});
 
         res.status(200).send({ status: true, message: "User Logged in Successfully", data: { userId: user._id, token: token } });
     } catch (error) {
